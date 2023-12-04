@@ -195,7 +195,7 @@ class RangeSlider: UIControl {
         upperThumbLayer.frame = CGRect(x: upperThumbCenter - thumbWidth / 2.0, y: 4, width: thumbWidth, height: thumbWidth)
         upperThumbLayer.setNeedsDisplay()
         upperThumbTextLayer.frame = CGRect(x: 0, y: 0, width: thumbWidth, height: thumbWidth)
-        upperThumbTextLayer.text = "\(upperValueInt)"
+        upperThumbTextLayer.text = upperValueInt == Int(maximumValue) ? "\(upperValueInt)+" : "\(upperValueInt)"
         upperThumbTextLayer.setNeedsDisplay()
         
         CATransaction.commit()

@@ -31,18 +31,10 @@ class BaseButton: UIButton {
         commonInit()
     }
     
-    override open var isHighlighted: Bool {
-        didSet {
-            super.isHighlighted = isHighlighted
-            backgroundColor = isHighlighted ? UIColor.appColor(.baseButtonHighlightedBackgroundColor) : .clear
-        }
-    }
-    
     // MARK: - Private methods
     
     private func commonInit() {
-        backgroundColor = .clear
-        
+        backgroundColor = .white
         titleLabel?.font = UIFont.roboto(style: .medium, size: 13)
         setTitleColor(UIColor.appColor(.mainBlue), for: .normal)
     }

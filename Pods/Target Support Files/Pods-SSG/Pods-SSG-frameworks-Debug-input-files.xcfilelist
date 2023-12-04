@@ -1,2 +1,3 @@
 ${PODS_ROOT}/Target Support Files/Pods-SSG/Pods-SSG-frameworks.sh
+${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework
 ${BUILT_PRODUCTS_DIR}/collection-view-layouts/collection_view_layouts.framework

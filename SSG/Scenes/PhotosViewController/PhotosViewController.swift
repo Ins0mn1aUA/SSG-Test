@@ -7,6 +7,7 @@
 
 import UIKit
 import collection_view_layouts
+import MaterialComponents.MaterialRipple
 
 class PhotosViewController: UIViewController {
     
@@ -17,12 +18,16 @@ class PhotosViewController: UIViewController {
     
     private var filterButtonsStackView: UIStackView!
     private var filterByGenderButton: BaseButton!
+    private let filterByGenderButtonRippleTouchController = MDCRippleTouchController()
     private var filterByAgeButton: BaseButton!
+    private let filterByAgeButtonRippleTouchController = MDCRippleTouchController()
      
     private var leftSeparatorView: UIView!
     private var rightSeparatorView: UIView!
     
     private var filterByCountryButton: BaseButton!
+    private let filterByCountryButtonRippleTouchController = MDCRippleTouchController()
+
     private var filterByAgeRangeSlider: RangeSlider!
     private var isFilterByAgeRangeSliderShown: Bool = false
 
@@ -35,7 +40,6 @@ class PhotosViewController: UIViewController {
     
     private let viewModel = PhotosViewModel()
     
-    
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
@@ -43,7 +47,17 @@ class PhotosViewController: UIViewController {
         
         setupUI()
         setupLayout()
+        // Ripple effect controller
         setupRoundedCorners()
+        
+        filterByGenderButtonRippleTouchController.rippleView.rippleColor = UIColor.appColor(.baseButtonHighlightedBackgroundColor)
+        filterByGenderButtonRippleTouchController.addRipple(to: filterByGenderButton)
+        
+        filterByAgeButtonRippleTouchController.rippleView.rippleColor = UIColor.appColor(.baseButtonHighlightedBackgroundColor)
+        filterByAgeButtonRippleTouchController.addRipple(to: filterByAgeButton)
+        
+        filterByCountryButtonRippleTouchController.rippleView.rippleColor = UIColor.appColor(.baseButtonHighlightedBackgroundColor)
+        filterByCountryButtonRippleTouchController.addRipple(to: filterByCountryButton)
     }
     
     override func viewDidLayoutSubviews() {
@@ -56,6 +70,11 @@ class PhotosViewController: UIViewController {
         }
         
         filterByAgeRangeSlider.updateLayerFrames()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -89,7 +108,12 @@ class PhotosViewController: UIViewController {
         
         // Filter by gender BaseButton
         filterByGenderButton = BaseButton()
+        filterByGenderButton.layer.cornerRadius = 3
+        filterByGenderButton.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        filterByGenderButton.clipsToBounds = true
+        
         filterByGenderButton.setImage(viewModel.selectedGender.image, for: .normal)
+        filterByGenderButton.setImage(viewModel.selectedGender.image, for: .highlighted)
         filterByGenderButton.setTitle(viewModel.selectedGender.rawValue, for: .normal)
         filterByGenderButton.centerTextAndImage(spacing: 8)
         filterByGenderButton.addTarget(self, action: #selector(filterByGenderButtonTapped), for: .touchUpInside)
@@ -123,6 +147,10 @@ class PhotosViewController: UIViewController {
         filterByCountryButton = BaseButton()
         filterByCountryButton.setTitle("Azerbaijan", for: .normal)
         filterByCountryButton.setImage(UIImage(named: "AzerbaijanFlag"), for: .normal)
+        filterByCountryButton.setImage(UIImage(named: "AzerbaijanFlag"), for: .highlighted)
+        filterByCountryButton.layer.cornerRadius = 3
+        filterByCountryButton.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+        filterByCountryButton.clipsToBounds = true
         filterByCountryButton.centerTextAndImage(spacing: 8)
         filterButtonsStackView.addArrangedSubview(filterByCountryButton)
         
@@ -273,6 +301,7 @@ class PhotosViewController: UIViewController {
         viewModel.selectedGender = viewModel.selectedGender.next
         
         filterByGenderButton.setImage(viewModel.selectedGender.image, for: .normal)
+        filterByGenderButton.setImage(viewModel.selectedGender.image, for: .highlighted)
         filterByGenderButton.setTitle(viewModel.selectedGender.rawValue, for: .normal)
         
         photosCollectionViewProvider.filter(by: viewModel.selectedGender)

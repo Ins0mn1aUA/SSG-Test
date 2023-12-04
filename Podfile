@@ -7,5 +7,6 @@ target 'SSG' do
 
   # Pods for SSG
 pod 'collection-view-layouts/PinterestLayout'
+pod 'MaterialComponents/Ripple'
 
 end

@@ -30,13 +30,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         var backgroundImage = UIImage(named: "navigationImage")
         if UIDevice.current.userInterfaceIdiom == .pad {
-            backgroundImage = backgroundImage?.stretchableImage(withLeftCapWidth: 0, topCapHeight: 0)
+            backgroundImage = backgroundImage?.resizableImage(withCapInsets: .init(top: 0, left: 0, bottom: 48, right: 0), resizingMode: .stretch)
         } else {
             backgroundImage = backgroundImage?.resizableImage(withCapInsets: .zero, resizingMode: .stretch)
         }
         navigationBarAppearance.setBackgroundImage(backgroundImage, for: .default)
         
         let newNavigationBarAppearance = UINavigationBarAppearance()
+        newNavigationBarAppearance.configureWithDefaultBackground()
+        newNavigationBarAppearance.titleTextAttributes = [.font: UIFont.roboto(style: .medium, size: 21), .foregroundColor: UIColor.white]
+        
         newNavigationBarAppearance.backgroundImage = backgroundImage
         navigationBarAppearance.standardAppearance = newNavigationBarAppearance
         navigationBarAppearance.scrollEdgeAppearance = navigationBarAppearance.standardAppearance
